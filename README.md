@@ -21,7 +21,7 @@ log.path=${HOME}/logs/app.log
 ```
 
 If the Java system property is set with -DHOME=/home/user, the above property is interpreted as:
-```
+```properties
 log.path=/home/user/logs/app.log
 ```
 
