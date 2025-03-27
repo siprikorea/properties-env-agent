@@ -2,7 +2,7 @@
 
 ## Overview
 
-`Properties Environment Variable Agent` is a Java Agent that replaces environment variable placeholders (e.g. `${ENV_VAR_NAME}`) in the values of `java.util.Properties` with their corresponding values from the system environment.
+`Properties Environment Variable Agent` is a Java Agent that replaces placeholders (e.g. ${ENV_VAR_NAME}) in the values of java.util.Properties with the corresponding values provided via Java system properties (e.g., -DENV_VAR_NAME=...).
 
 This agent is designed to support **legacy systems** where `Properties` files are used, enabling the use of environment variables for configuration such as file paths and other settings.
 
@@ -12,7 +12,7 @@ This agent is designed to support **legacy systems** where `Properties` files ar
 
 - Loads as a Java Agent during JVM startup
 - Intercepts `java.util.Properties` class usage
-- Replaces value placeholders like `${...}` with actual environment variable values
+- Replaces value placeholders like ${...} with the corresponding Java system property values
 
 Example:
 
@@ -20,7 +20,7 @@ Example:
 log.path=${HOME}/logs/app.log
 ```
 
-If the environment variable HOME=/home/user, the above property is interpreted as:
+If the Java system property is set with -DHOME=/home/user, the above property is interpreted as:
 ```
 log.path=/home/user/logs/app.log
 ```
@@ -40,11 +40,17 @@ Use Gradle to build the project:
 ---
 
 ## Usage
-- Build the project to generate the .jar file.
-- Launch your Java application with the agent using the -javaagent option:
+
+1. Build the project to generate the .jar file.
+2. Launch your Java application with the agent using the `-javaagent` option.
+3. Specify system property values for placeholders using `-D` options.
+
+For example:
 
 ```bash
-java -javaagent:/path/to/properties-env-agent-all.jar -jar your-app.jar
+java -javaagent:/path/to/properties-env-agent-all.jar \
+     -DHOME=/home/user \
+     -jar your-app.jar
 ```
 
 ---
